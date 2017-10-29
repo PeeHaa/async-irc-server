@@ -1,0 +1,40 @@
+{
+  "name": "peehaa/async-irc-server",
+  "description": "Async IRC server",
+  "keywords": [
+    "irc",
+    "async",
+    "server",
+    "amphp"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Pieter Hordijk",
+      "email": "info@pieterhordijk.com",
+      "role": "Lead Developer"
+    }
+  ],
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require": {
+    "php": "^7.1",
+    "amphp/socket": "^0.10",
+    "amphp/process": "^0.2",
+    "amphp/redis": "^0.3",
+    "rdlowrey/auryn": "^1"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^6"
+  },
+  "autoload": {
+    "psr-4": {
+      "AsyncIrcServer\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "AsyncIrcServerTests\\": "tests/"
+    }
+  }
+}
