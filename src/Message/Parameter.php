@@ -4,7 +4,7 @@ namespace AsyncIrcServer\Message;
 
 class Parameter
 {
-    private $parameter;
+    protected $parameter;
 
     public function __construct(string $parameter)
     {

@@ -10,4 +10,9 @@ class Prefix
     {
         $this->prefix = $prefix;
     }
+
+    public function __toString(): string
+    {
+        return $this->prefix;
+    }
 }

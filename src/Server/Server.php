@@ -7,6 +7,11 @@ use Amp\Process\Process;
 use Amp\Promise;
 use Amp\Socket\ServerSocket;
 use Amp\Success;
+use AsyncIrcServer\Command\Response\Notice;
+use AsyncIrcServer\Message\Parameter;
+use AsyncIrcServer\Message\Parameters;
+use AsyncIrcServer\Message\Prefix;
+use AsyncIrcServer\Message\Trailer;
 use AsyncIrcServer\Router\FrontController;
 use function Amp\call;
 use function Amp\asyncCall;
@@ -64,7 +69,12 @@ class Server
     private function registerClient(ServerSocket $socket): Promise
     {
         return call(function() use ($socket) {
-            $socket->write('*** Looking up your hostname' . "\r\n");
+            $response = new Notice(
+                new Prefix($this->name),
+                new Parameters(new Parameter('*'), new Trailer('*** Looking up your hostname'))
+            );
+
+            $socket->write($response . "\r\n");
 
             preg_match('~^(.*):\d+$~', $socket->getRemoteAddress(), $matches);
 
@@ -75,14 +85,24 @@ class Server
             $result = yield new Message($process->getStdout());
 
             if (!preg_match('~^Name:\s+(.*)$~m', $result, $matches)) {
-                $socket->end('*** Couldn\'t find your hostname. Closing connection...' . "\r\n");
+                $response = new Notice(
+                    new Prefix($this->name),
+                    new Parameters(new Parameter('*'), new Trailer('*** Couldn\'t find your hostname. Closing connection...'))
+                );
+
+                $socket->end($response . "\r\n");
 
                 return;
             }
 
             $this->clients[$socket->getRemoteAddress()] = $socket;
 
-            $socket->write('*** Found your hostname (' . $matches[1] . ').' . "\r\n");
+            $response = new Notice(
+                new Prefix($this->name),
+                new Parameters(new Parameter('*'), new Trailer('*** Found your hostname (' . $matches[1] . ').'))
+            );
+
+            $socket->write($response . "\r\n");
         });
     }
 
