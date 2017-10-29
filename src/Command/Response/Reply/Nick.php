@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace AsyncIrcServer\Command\Response;
+namespace AsyncIrcServer\Command\Response\Reply;
 
 use AsyncIrcServer\Message\Parameters;
 use AsyncIrcServer\Message\Prefix;

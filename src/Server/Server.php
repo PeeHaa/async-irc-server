@@ -112,6 +112,14 @@ class Server
             return new Success();
         }
 
-        return $this->frontController->run($message);
+        return call(function() use ($socket, $message) {
+            $response = yield $this->frontController->run($message);
+
+            if (!$response) {
+                return;
+            }
+
+            return $socket->write($response . "\r\n");
+        });
     }
 }

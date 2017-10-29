@@ -19,4 +19,9 @@ class Nick
     {
         return $this->message->hasParameters();
     }
+
+    public function getNick(): string
+    {
+        return $this->message->getParameter(0);
+    }
 }

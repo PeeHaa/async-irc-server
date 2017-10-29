@@ -33,7 +33,7 @@ class FrontController
 
         var_dump('known route: ' . $message->getCommand());
 
-        // this should be done properly
+        // @todo fine a nicer way to share the object for just the scope of the Injector::execute() call
         $this->auryn->share($message);
 
         return $this->auryn->execute($this->router->getAction($message->getCommand()));

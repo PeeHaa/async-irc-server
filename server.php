@@ -4,6 +4,7 @@
 namespace AsyncIrcServer;
 
 use Amp\Loop;
+use Amp\Redis\Client as RedisClient;
 use AsyncIrcServer\Router\FrontController;
 use AsyncIrcServer\Router\Router;
 use AsyncIrcServer\Server\Server;
@@ -14,7 +15,12 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 $auryn = new Injector();
 
-$auryn->share(Injector::class);
+$auryn->share($auryn);
+
+$auryn->share(RedisClient::class);
+$auryn->define(RedisClient::class, [
+    ':uri' => 'tcp://localhost:6379',
+]);
 
 $auryn->define(Uri::class, [
     ':address' => '127.0.0.1',
