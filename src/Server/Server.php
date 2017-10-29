@@ -7,7 +7,6 @@ use Amp\Process\Process;
 use Amp\Promise;
 use Amp\Socket\ServerSocket;
 use Amp\Success;
-use AsyncIrcServer\Message\Factory;
 use AsyncIrcServer\Router\FrontController;
 use function Amp\call;
 use function Amp\asyncCall;
@@ -19,16 +18,13 @@ class Server
 
     private $uri;
 
-    private $messageFactory;
-
     private $frontController;
 
     private $name;
 
-    public function __construct(Uri $uri, Factory $messageFactory, FrontController $frontController, string $name)
+    public function __construct(Uri $uri, FrontController $frontController, string $name)
     {
-        $this->uri             = $uri;
-        $this->messageFactory  = $messageFactory;
+        $this->uri             = $uri;;
         $this->frontController = $frontController;
         $this->name            = $name;
     }
