@@ -2,7 +2,7 @@
 
 namespace AsyncIrcServer\Message;
 
-class Parameters
+class Parameters implements \Countable
 {
     private $parameters = [];
 
@@ -14,5 +14,15 @@ class Parameters
     public function __toString(): string
     {
         return implode(' ', $this->parameters);
+    }
+
+    public function get(int $index): string
+    {
+        return (string) $this->parameters[$index];
+    }
+
+    public function count(): int
+    {
+        return count($this->parameters);
     }
 }

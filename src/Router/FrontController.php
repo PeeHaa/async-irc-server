@@ -33,6 +33,9 @@ class FrontController
 
         var_dump('known route: ' . $message->getCommand());
 
+        // this should be done properly
+        $this->auryn->share($message);
+
         return $this->auryn->execute($this->router->getAction($message->getCommand()));
     }
 }

@@ -22,6 +22,16 @@ class Message
         return (string) $this->command;
     }
 
+    public function hasParameters(): bool
+    {
+        return (bool) count($this->parameters);
+    }
+
+    public function getParameter(int $index): string
+    {
+        return $this->parameters->get($index);
+    }
+
     public function __toString(): string
     {
         return sprintf('%s %s', $this->command, $this->parameters);
